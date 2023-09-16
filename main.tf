@@ -13,16 +13,11 @@ provider "azurerm" {
   features {}
 }
 
-resource "azurerm_resource_group" "rg" {
-  name     = "app-rg"
-  location = "Central India"
-}
-
-resource "azurerm_storage_account" "storageac" {
-  name                     = var.name_value
-  resource_group_name      = var.resource_group_name_value
-  location                 = var.location_value
-  account_tier             = var.account_tier_value
-  account_replication_type = var.account_replication_type_value
-  depends_on = [ azurerm_resource_group.rg ]
+module "az_storge" {
+  source = "./modules/az_storage" #provide path of module even github it can be anywhere
+  name_value = "tfstoragerahul940"
+  resource_group_name_value = "app-rg"
+  location_value = "Central India"
+  account_tier_value = "Standard"
+  account_replication_type_value = "LRS"
 }
